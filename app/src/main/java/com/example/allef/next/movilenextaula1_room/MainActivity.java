@@ -2,6 +2,7 @@ package com.example.allef.next.movilenextaula1_room;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -47,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//
+
+                Intent intent = new Intent(MainActivity.this,NewWordActivity.class);
+                startActivityForResult(intent,NEW_WORD_ACTIVITY_REQUEST_CODE);
+
 
 
 
@@ -75,5 +79,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 }
