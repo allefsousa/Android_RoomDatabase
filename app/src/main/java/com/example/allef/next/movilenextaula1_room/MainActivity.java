@@ -1,29 +1,55 @@
 package com.example.allef.next.movilenextaula1_room;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+    private WordViewModel mwordViewModel;
+    private WordListAdapter wordListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        wordListAdapter = new WordListAdapter(this);
+        recyclerView.setAdapter(wordListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mwordViewModel = ViewModelProviders.of(this).get(WordViewModel.class); // recuperando dados do view model
+        mwordViewModel.getAllWords().observe(this, new Observer<List<Word>>() {
+            @Override
+            public void onChanged(@Nullable List<Word> words) {
+                wordListAdapter.setWords(words);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+//
+
+
 
             }
         });
